@@ -1,5 +1,4 @@
-export type Player = "X" | "O";
-export type GameStatus = "active" | "won" | "draw";
+import type { GameStatus, Player } from "../types/game.types.js";
 
 export function createEmptyBoard(): string[] {
   return Array(9).fill("");
@@ -68,3 +67,19 @@ export function applyMove(
     winner,
   };
 }
+
+export function formatBoard(board: string[]): string {
+  const display = board.map((cell, index) =>
+    cell === "" ? String(index + 1) : cell,
+  );
+  return [
+    "```",
+    ` ${display[0]} │ ${display[1]} │ ${display[2]} `,
+    `───┼───┼───`,
+    ` ${display[3]} │ ${display[4]} │ ${display[5]} `,
+    `───┼───┼───`,
+    ` ${display[6]} │ ${display[7]} │ ${display[8]} `,
+    "```",
+  ].join("\n");
+}
+

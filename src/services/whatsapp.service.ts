@@ -2,21 +2,17 @@ import {
   cancelActiveGamesForUser,
   createOrUpdateGame,
   getActiveGameForUser,
-  type GameState,
-} from "./game-repository.js";
-import { applyMove, createEmptyBoard, type Player } from "./game-logic.js";
-
-export interface WhatsAppMessage {
-  from: string;
-  body: string;
-  senderName?: string;
-}
-
-export interface BotResponse {
-  message: string;
-  outboundMessages?: Array<{ to: string; text: string }>;
-  game?: unknown;
-}
+} from "../repositories/game.repository.js";
+import {
+  applyMove,
+  createEmptyBoard,
+  formatBoard,
+} from "./game-logic.service.js";
+import type {
+  BotResponse,
+  Player,
+  WhatsAppMessage,
+} from "../types/game.types.js";
 
 export function verifyWebhookRequest(
   params: Record<string, string | undefined>,
@@ -35,21 +31,6 @@ export function verifyWebhookRequest(
 
 export function normalizePhoneNumber(raw: string): string {
   return raw.replace(/[^\d]/g, "");
-}
-
-export function formatBoard(board: string[]): string {
-  const display = board.map((cell, index) =>
-    cell === "" ? String(index + 1) : cell,
-  );
-  return [
-    "```",
-    ` ${display[0]} │ ${display[1]} │ ${display[2]} `,
-    `───┼───┼───`,
-    ` ${display[3]} │ ${display[4]} │ ${display[5]} `,
-    `───┼───┼───`,
-    ` ${display[6]} │ ${display[7]} │ ${display[8]} `,
-    "```",
-  ].join("\n");
 }
 
 export async function handleWhatsAppMessage(
@@ -100,11 +81,11 @@ export async function handleWhatsAppMessage(
     });
 
     return {
-      message: `Challenge sent to +${targetId}! Waiting for them to reply "accept"...`,
+      message: `🎮 Challenge sent to +${targetId}! Waiting for them to reply "accept"...`,
       outboundMessages: [
         {
           to: targetId,
-          text: `${senderName} (+${senderId}) has challenged you to a game of Tic-Tac-Toe!\n\nReply "accept" to play as O, or "decline" to reject.`,
+          text: `🎮 ${senderName} (+${senderId}) has challenged you to a game of Tic-Tac-Toe!\n\nReply "accept" to play as O, or "decline" to reject.`,
         },
       ],
       game: newGame,

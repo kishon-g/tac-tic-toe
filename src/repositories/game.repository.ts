@@ -1,36 +1,10 @@
 import { PrismaClient } from "@prisma/client";
-
-export type Player = "X" | "O";
-export type GameStatus =
-  | "pending_invite"
-  | "active"
-  | "won"
-  | "draw"
-  | "cancelled";
-
-export interface GameState {
-  id?: number;
-  gameId: string;
-  playerXId: string;
-  playerXName: string;
-  playerOId: string;
-  playerOName: string;
-  board: string[];
-  currentPlayer: Player;
-  status: GameStatus;
-  createdAt: string;
-  updatedAt: string;
-  sessionId?: string;
-}
-
-export interface SessionStats {
-  sessionId: string;
-  gamesPlayed: number;
-  xWins: number;
-  oWins: number;
-  draws: number;
-  lastUpdatedAt: string;
-}
+import type {
+  GameState,
+  GameStatus,
+  Player,
+  SessionStats,
+} from "../types/game.types.js";
 
 const inMemoryGames = new Map<string, GameState>();
 const inMemorySessionStats = new Map<string, SessionStats>();
@@ -220,7 +194,6 @@ export async function cancelActiveGamesForUser(
   }
 }
 
-// Aliases for backward compatibility
 export const createGameState = createOrUpdateGame;
 export const getActiveGameState = getActiveGameForUser;
 
