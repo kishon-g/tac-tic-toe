@@ -52,7 +52,7 @@ export async function handleWhatsAppMessage(
     if (!targetId || targetId.length < 7) {
       return {
         message:
-          'Invalid phone number format. Please send "play <phone_number>" with a valid mobile number.',
+          'Invalid phone number format. Please send "play <country_code><phone_number>" with a valid mobile number.',
       };
     }
 
@@ -103,7 +103,7 @@ export async function handleWhatsAppMessage(
     ) {
       return {
         message:
-          'No pending invitation found for you. To start a game, send "play <phone_number>".',
+          'No pending invitation found for you. To start a game, send "play <country_code><phone_number>"".',
       };
     }
 
@@ -154,7 +154,7 @@ export async function handleWhatsAppMessage(
     if (!activeGame || activeGame.status !== "active") {
       return {
         message:
-          'No active game found. To challenge a friend, reply with "play <phone_number>".',
+          'No active game found. To challenge a friend, reply with "play <country_code><phone_number>"".',
       };
     }
 
@@ -251,9 +251,9 @@ export async function handleWhatsAppMessage(
   // 4. Default Instructions / Help
   return {
     message:
-      `🎮 Welcome to WhatsApp 2-Player Tic-Tac-Toe!\n\n` +
+      `Welcome to WhatsApp 2-Player Tic-Tac-Toe!\n\n` +
       `To play with a friend:\n` +
-      `• Send: play <phone_number> (e.g. play 15559876543)\n\n` +
+      `• Send: play <country_code><country_code><phone_number>" (e.g. play +94771234567)\n\n` +
       `Your friend will receive an invitation to accept!`,
   };
 }
