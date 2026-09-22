@@ -1,0 +1,35 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model GameMatch {
+  id            Int      @id @default(autoincrement())
+  gameId        String   @unique @map("game_id")
+  playerXId     String   @map("player_x_id")
+  playerXName   String   @map("player_x_name")
+  playerOId     String   @map("player_o_id")
+  playerOName   String   @map("player_o_name")
+  board         String[]
+  currentPlayer String   @map("current_player")
+  status        String
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@map("game_matches")
+}
+
+model SessionStats {
+  sessionId     String   @id @map("session_id")
+  gamesPlayed   Int      @default(0) @map("games_played")
+  xWins         Int      @default(0) @map("x_wins")
+  oWins         Int      @default(0) @map("o_wins")
+  draws         Int      @default(0) @map("draws")
+  lastUpdatedAt DateTime @default(now()) @map("last_updated_at")
+
+  @@map("session_stats")
+}
