@@ -197,10 +197,8 @@ app.get("/api/game", async (_req: Request, res: Response) => {
 
 async function start() {
   await ensureGameTable();
-  app.listen(port, () => {
-    console.log(
-      `WhatsApp Tic-Tac-Toe server listening on http://localhost:${port}`,
-    );
+  app.listen(port, "0.0.0.0", () => {
+    console.log(`WhatsApp Tic-Tac-Toe server listening on port ${port}`);
   });
 }
 
