@@ -82,4 +82,3 @@ export function formatBoard(board: string[]): string {
     "```",
   ].join("\n");
 }
-

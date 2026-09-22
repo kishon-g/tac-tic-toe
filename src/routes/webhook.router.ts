@@ -10,4 +10,3 @@ router.get("/webhook/whatsapp", verifyWebhook);
 router.post("/webhook/whatsapp", processWebhook);
 
 export default router;
-

@@ -6,18 +6,15 @@ import {
   createEmptyBoard,
   findWinner,
   getNextPlayer,
-} from "./game-logic.ts";
 } from "./services/game-logic.service.ts";
 import {
   createOrUpdateSessionStats,
   getSessionStats,
-} from "./game-repository.ts";
 } from "./repositories/game.repository.ts";
 import {
   handleWhatsAppMessage,
   parseWhatsAppWebhook,
   verifyWebhookRequest,
-} from "./whatsapp-bot.ts";
 } from "./services/whatsapp.service.ts";
 
 test("createEmptyBoard creates a valid empty game board", () => {
